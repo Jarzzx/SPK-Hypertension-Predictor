@@ -1,0 +1,119 @@
+LAPORAN HASIL PERHITUNGAN MANUAL (NAIVE BAYES)
+========================================================
+Tanggal: 2026-02-04 06:13:52
+Metode: Naive Bayes Classifier (Fixed Knowledge Base - Expert Probabilities)
+Note: Perhitungan menggunakan 7 Indikator sesuai request user (Riwayat diberi bobot 1.0 agar skala nilai tetap).
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) = Hasil
+
+Pasien: AGI AGINTA SIMAMORA (Usia: 23, JK: Perempuan, Tensi: 119/81, Gula: 120.00, BMI: 18.491124)
+Kategori: Usia=Muda, Tensi=Stage 1, Gula=Prediabetes, BMI=Underweight, RK=Tidak Ada, RP=Tidak Ada
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.2 x 0.5 x 0.7 x 0.6 x 0.1 x 1 x 1 = 0.00420
+----------------------------------------------------------------------
+Pasien: AINI (Usia: 52, JK: Perempuan, Tensi: 166/84, Gula: 181.00, BMI: 31.786395)
+Kategori: Usia=Paruh Baya, Tensi=Stage 2, Gula=Diabetes, BMI=Obese, RK=Tidak Ada, RP=Tidak Ada
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.6 x 0.5 x 0.9 x 0.8 x 0.8 x 1 x 1 = 0.17280
+----------------------------------------------------------------------
+Pasien: DONA (Usia: 25, JK: Perempuan, Tensi: 117/87, Gula: 126.00, BMI: 19.289379)
+Kategori: Usia=Muda, Tensi=Stage 1, Gula=Diabetes, BMI=Normal, RK=Tidak Ada, RP=Tidak Ada
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.2 x 0.5 x 0.7 x 0.8 x 0.3 x 1 x 1 = 0.01680
+----------------------------------------------------------------------
+Pasien: IDA ROYANI (Usia: 55, JK: Perempuan, Tensi: 120/90, Gula: 125.00, BMI: 21.620648)
+Kategori: Usia=Paruh Baya, Tensi=Stage 2, Gula=Prediabetes, BMI=Normal, RK=Tidak Ada, RP=Tidak Ada
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.6 x 0.5 x 0.9 x 0.6 x 0.3 x 1 x 1 = 0.04860
+----------------------------------------------------------------------
+Pasien: JUHANATI (Usia: 44, JK: Perempuan, Tensi: 189/115, Gula: 139.00, BMI: 26.159334)
+Kategori: Usia=Paruh Baya, Tensi=Stage 2, Gula=Diabetes, BMI=Overweight, RK=Tidak Ada, RP=Hipertensi
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.6 x 0.5 x 0.9 x 0.8 x 0.6 x 1 x 1 = 0.12960
+----------------------------------------------------------------------
+Pasien: MEGA (Usia: 53, JK: Perempuan, Tensi: 152/94, Gula: 212.00, BMI: 22.892820)
+Kategori: Usia=Paruh Baya, Tensi=Stage 2, Gula=Diabetes, BMI=Normal, RK=Tidak Ada, RP=Hipertensi dan Diabetes Melitus
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.6 x 0.5 x 0.9 x 0.8 x 0.3 x 1 x 1 = 0.06480
+----------------------------------------------------------------------
+Pasien: NETI (Usia: 45, JK: Perempuan, Tensi: 158/93, Gula: 374.00, BMI: 29.218408)
+Kategori: Usia=Paruh Baya, Tensi=Stage 2, Gula=Diabetes, BMI=Overweight, RK=Tidak Ada, RP=Hipertensi dan Diabetes Melitus
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.6 x 0.5 x 0.9 x 0.8 x 0.6 x 1 x 1 = 0.12960
+----------------------------------------------------------------------
+Pasien: NINING (Usia: 32, JK: Perempuan, Tensi: 120/93, Gula: 122.00, BMI: 28.133657)
+Kategori: Usia=Muda, Tensi=Stage 2, Gula=Prediabetes, BMI=Overweight, RK=Tidak Ada, RP=Tidak Ada
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.2 x 0.5 x 0.9 x 0.6 x 0.6 x 1 x 1 = 0.03240
+----------------------------------------------------------------------
+Pasien: RAJA PARIDA (Usia: 56, JK: Perempuan, Tensi: 135/85, Gula: 125.00, BMI: 20.544193)
+Kategori: Usia=Paruh Baya, Tensi=Stage 1, Gula=Prediabetes, BMI=Normal, RK=Tidak Ada, RP=Tidak Ada
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.6 x 0.5 x 0.7 x 0.6 x 0.3 x 1 x 1 = 0.03780
+----------------------------------------------------------------------
+Pasien: ROSMALIA (Usia: 45, JK: Perempuan, Tensi: 132/80, Gula: 200.00, BMI: 28.720083)
+Kategori: Usia=Paruh Baya, Tensi=Stage 1, Gula=Diabetes, BMI=Overweight, RK=Tidak Ada, RP=Diabetes Melitus
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.6 x 0.5 x 0.7 x 0.8 x 0.6 x 1 x 1 = 0.10080
+----------------------------------------------------------------------
+Pasien: ROSNAINI (Usia: 56, JK: Perempuan, Tensi: 132/71, Gula: 124.00, BMI: 21.620648)
+Kategori: Usia=Paruh Baya, Tensi=Stage 1, Gula=Prediabetes, BMI=Normal, RK=Tidak Ada, RP=Tidak Ada
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.6 x 0.5 x 0.7 x 0.6 x 0.3 x 1 x 1 = 0.03780
+----------------------------------------------------------------------
+Pasien: RUKMINI (Usia: 59, JK: Perempuan, Tensi: 181/94, Gula: 328.00, BMI: 25.065746)
+Kategori: Usia=Paruh Baya, Tensi=Stage 2, Gula=Diabetes, BMI=Overweight, RK=Hipertensi, RP=Hipertensi dan Diabetes Melitus
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.6 x 0.5 x 0.9 x 0.8 x 0.6 x 1 x 1 = 0.12960
+----------------------------------------------------------------------
+Pasien: RULI ERPINA (Usia: 43, JK: Perempuan, Tensi: 113/79, Gula: 115.00, BMI: 28.398718)
+Kategori: Usia=Paruh Baya, Tensi=Normal, Gula=Prediabetes, BMI=Overweight, RK=Tidak Ada, RP=Tidak Ada
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.6 x 0.5 x 0.2 x 0.6 x 0.6 x 1 x 1 = 0.02160
+----------------------------------------------------------------------
+Pasien: SATINEM (Usia: 57, JK: Perempuan, Tensi: 107/84, Gula: 172.00, BMI: 34.547347)
+Kategori: Usia=Paruh Baya, Tensi=Stage 1, Gula=Diabetes, BMI=Obese, RK=Tidak Ada, RP=Tidak Ada
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.6 x 0.5 x 0.7 x 0.8 x 0.8 x 1 x 1 = 0.13440
+----------------------------------------------------------------------
+Pasien: SULASTRI (Usia: 50, JK: Perempuan, Tensi: 170/77, Gula: 141.00, BMI: 22.521508)
+Kategori: Usia=Paruh Baya, Tensi=Stage 2, Gula=Diabetes, BMI=Normal, RK=Tidak Ada, RP=Hipertensi
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.6 x 0.5 x 0.9 x 0.8 x 0.3 x 1 x 1 = 0.06480
+----------------------------------------------------------------------
+Pasien: SUMARNI (Usia: 52, JK: Perempuan, Tensi: 141/81, Gula: 158.00, BMI: 27.339912)
+Kategori: Usia=Paruh Baya, Tensi=Stage 2, Gula=Diabetes, BMI=Overweight, RK=Tidak Ada, RP=Tidak Ada
+Rumus: P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI) x P(RK) x P(RP) [7 Indikator]
+Hitung: 0.6 x 0.5 x 0.9 x 0.8 x 0.6 x 1 x 1 = 0.12960
+----------------------------------------------------------------------
+No   | Nama Pasien               | Hasil Akhir          | Nilai Probabilitas
+--------------------------------------------------------------------------------
+1    | AGI AGINTA SIMAMORA       | Tidak Berpotensi     | 0.00420        
+2    | AINI                      | Sangat Berpotensi    | 0.17280        
+3    | DONA                      | Tidak Berpotensi     | 0.01680        
+4    | IDA ROYANI                | Cukup Berpotensi     | 0.04860        
+5    | JUHANATI                  | Sangat Berpotensi    | 0.12960        
+6    | MEGA                      | Cukup Berpotensi     | 0.06480        
+7    | NETI                      | Sangat Berpotensi    | 0.12960        
+8    | NINING                    | Cukup Berpotensi     | 0.03240        
+9    | RAJA PARIDA               | Cukup Berpotensi     | 0.03780        
+10   | ROSMALIA                  | Sangat Berpotensi    | 0.10080        
+11   | ROSNAINI                  | Cukup Berpotensi     | 0.03780        
+12   | RUKMINI                   | Sangat Berpotensi    | 0.12960        
+13   | RULI ERPINA               | Cukup Berpotensi     | 0.02160        
+14   | SATINEM                   | Sangat Berpotensi    | 0.13440        
+15   | SULASTRI                  | Cukup Berpotensi     | 0.06480        
+16   | SUMARNI                   | Sangat Berpotensi    | 0.12960        
+--------------------------------------------------------------------------------
+
+PENJELASAN LOGIKA KLASIFIKASI (THRESHOLD):
+1. SANGAT BERPOTENSI (Score >= 0.10)
+   - Dicapai jika mayoritas indikator bernilai risiko tinggi (cth: AINI = 0.17280).
+   - Representasi: Pasien dengan Usia Tua, Tensi Tinggi, Gula Tinggi, & Obesitas.
+
+2. CUKUP BERPOTENSI (0.02 <= Score < 0.10)
+   - Dicapai jika indikator risiko bercampur dengan indikator sehat (cth: IDA ROYANI = 0.04860).
+   - Representasi: Pasien dengan beberapa risiko tinggi tapi faktor lain normal.
+
+3. TIDAK BERPOTENSI (Score < 0.02)
+   - Dicapai jika mayoritas indikator bernilai normal/sehat (cth: DONA = 0.01680).
+   - Representasi: Pasien muda dengan parameter kesehatan baik.

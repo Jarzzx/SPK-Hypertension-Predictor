@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Sequence Diagrams - SPK Hipertensi</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f0f2f5; }
+        .diagram-container { background: white; margin-bottom: 30px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h2 { border-bottom: 2px solid #333; padding-bottom: 10px; margin-top: 0; }
+        .mermaid { text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Sequence Diagrams Per Use Case</h1>
+    <p>Berikut adalah preview visual dari setiap alur sequence diagram.</p>
+
+    <div class="diagram-container">
+        <h2>1. Login</h2>
+        <div class="mermaid">
+            sequenceDiagram
+                autonumber
+                actor Petugas as Petugas/Admin
+                participant View as View (Login Page)
+                participant Ctrl as Controller (Auth)
+                participant DB as Database (User)
+
+                Petugas->>View: Mengakses Halaman Login
+                View-->>Petugas: Menampilkan Form Login
+                Petugas->>View: Memasukkan Username & Password
+                View->>Ctrl: Kirim Data Login (POST)
+                Ctrl->>DB: Cek Kredensial User
+                DB-->>Ctrl: Return Hasil Validasi
+                
+                alt Login Berhasil
+                    Ctrl-->>View: Redirect ke Dashboard
+                    View-->>Petugas: Tampilkan Dashboard Utama
+                else Login Gagal
+                    Ctrl-->>View: Return Pesan Error
+                    View-->>Petugas: Tampilkan Notifikasi Gagal
+                end
+        </div>
+    </div>
+
+    <div class="diagram-container">
+        <h2>2. Kelola Data Pasien - View & Tambah</h2>
+        <div class="mermaid">
+            sequenceDiagram
+                autonumber
+                actor Petugas as Petugas/Admin
+                participant View as View (Data Pasien)
+                participant Ctrl as Controller (Pasien)
+                participant DB as Database (Tabel Pasien)
+
+                Petugas->>View: Pilih Menu Data Pasien
+                View->>Ctrl: Request List Pasien
+                Ctrl->>DB: Query Select All Pasien
+                DB-->>Ctrl: Return Data Pasien
+                Ctrl-->>View: Tampilkan Tabel Data Pasien
+
+                opt Tambah Data Baru
+                    Petugas->>View: Klik Tombol Tambah
+                    View-->>Petugas: Tampilkan Form Input
+                    Petugas->>View: Input Data & Klik Simpan
+                    View->>Ctrl: Submit Data (POST)
+                    Ctrl->>DB: Insert Data Pasien
+                    DB-->>Ctrl: Return Sukses
+                    Ctrl-->>View: Refresh Halaman/Tabel
+                end
+        </div>
+    </div>
+
+    <div class="diagram-container">
+        <h2>3. Kelola Data Pasien - Edit</h2>
+        <div class="mermaid">
+            sequenceDiagram
+                autonumber
+                actor Petugas as Petugas/Admin
+                participant View as View (Data Pasien)
+                participant Ctrl as Controller (Pasien)
+                participant DB as Database (Tabel Pasien)
+
+                note over Petugas, View: Precondition: Petugas berada di Halaman Data Pasien
+
+                Petugas->>View: Klik Tombol Edit pada Baris Data
+                View->>Ctrl: Request Data by ID
+                Ctrl->>DB: Query Select One
+                DB-->>Ctrl: Return Data Pasien
+                Ctrl-->>View: Tampilkan Form Edit dengan Data Lama
+                
+                Petugas->>View: Update Data & Klik Simpan
+                View->>Ctrl: Submit Update (POST)
+                Ctrl->>DB: Update Data Pasien
+                DB-->>Ctrl: Return Sukses
+                Ctrl-->>View: Redirect/Refresh ke Tabel Pasien
+        </div>
+    </div>
+
+    <div class="diagram-container">
+        <h2>4. Kelola Data Pasien - Hapus</h2>
+        <div class="mermaid">
+            sequenceDiagram
+                autonumber
+                actor Petugas as Petugas/Admin
+                participant View as View (Data Pasien)
+                participant Ctrl as Controller (Pasien)
+                participant DB as Database (Tabel Pasien)
+
+                note over Petugas, View: Precondition: Petugas berada di Halaman Data Pasien
+
+                Petugas->>View: Klik Tombol Hapus pada Baris Data
+                View->>Ctrl: Request Delete ID
+                
+                opt Konfirmasi Hapus
+                    View-->>Petugas: Tampilkan Dialog Konfirmasi
+                    Petugas->>View: Klik Ya / OK
+                end
+
+                View->>Ctrl: Kirim Request Delete (POST/DELETE)
+                Ctrl->>DB: Delete Data Pasien
+                DB-->>Ctrl: Return Sukses
+                Ctrl-->>View: Refresh Halaman/Tabel
+        </div>
+    </div>
+
+    <div class="diagram-container">
+        <h2>5. Kelola Checkup (Naive Bayes)</h2>
+        <div class="mermaid">
+            sequenceDiagram
+                autonumber
+                actor Petugas as Petugas/Admin
+                participant View as View (Form Checkup)
+                participant Ctrl as Controller (Diagnosa)
+                participant DB as Database (Checkups)
+
+                Petugas->>View: Pilih Menu Checkup
+                View->>Ctrl: Request Halaman Checkup
+                Ctrl-->>View: Tampilkan Form Checkup
+                
+                Petugas->>View: Pilih Pasien & Input Gejala (Tensi, BMI, dll)
+                View->>Ctrl: Submit Data Checkup
+                
+                rect rgb(240, 248, 255)
+                    note over Ctrl: Proses Perhitungan Naive Bayes
+                    Ctrl->>DB: Ambil Data Training/Probabilitas
+                    DB-->>Ctrl: Return Data Statistik
+                    Ctrl->>Ctrl: Hitung Probabilitas Posterior
+                    Ctrl->>Ctrl: Tentukan Klasifikasi (Ya/Tidak)
+                end
+
+                Ctrl->>DB: Simpan Hasil Checkup & Klasifikasi
+                DB-->>Ctrl: Return Sukses
+                Ctrl-->>View: Tampilkan Hasil Prediksi ke User
+        </div>
+    </div>
+
+    <div class="diagram-container">
+        <h2>6. Lihat Hasil Prediksi</h2>
+        <div class="mermaid">
+            sequenceDiagram
+                autonumber
+                actor Petugas as Petugas/Admin
+                participant View as View (Hasil Prediksi)
+                participant Ctrl as Controller (Laporan)
+                participant DB as Database (Checkups)
+
+                Petugas->>View: Pilih Menu Hasil Prediksi
+                View->>Ctrl: Request Data Hasil
+                Ctrl->>DB: Query Join Pasien & Checkups
+                DB-->>Ctrl: Return Data Lengkap
+                Ctrl-->>View: Tampilkan Tabel Riwayat Prediksi
+
+                opt Lihat Detail Perhitungan
+                    Petugas->>View: Klik Tombol Detail
+                    View->>Ctrl: Request Detail by ID
+                    Ctrl->>DB: Query Data Detail
+                    DB-->>Ctrl: Return Data Detail
+                    Ctrl-->>View: Tampilkan Rincian Nilai Probabilitas
+                end
+        </div>
+    </div>
+
+    <div class="diagram-container">
+        <h2>7. Cetak Laporan</h2>
+        <div class="mermaid">
+            sequenceDiagram
+                autonumber
+                actor Petugas as Petugas/Admin
+                participant View as View (Laporan Page)
+                participant Ctrl as Controller (Report)
+                participant DB as Database (Checkups)
+
+                Petugas->>View: Buka Menu Laporan
+                View-->>Petugas: Tampilkan Form Filter
+                Petugas->>View: Pilih Periode Tanggal & Klik Cetak
+                View->>Ctrl: Request Generate PDF
+                Ctrl->>DB: Query Data Berdasarkan Tanggal
+                DB-->>Ctrl: Return Data Filtered
+                Ctrl->>Ctrl: Generate File PDF (DomPDF/FPDF)
+                Ctrl-->>View: Return File PDF
+                View-->>Petugas: Dialog Download/Print
+        </div>
+    </div>
+
+    <div class="diagram-container">
+        <h2>8. Import Data CSV</h2>
+        <div class="mermaid">
+            sequenceDiagram
+                autonumber
+                actor Petugas as Petugas/Admin
+                participant View as View (Import Page)
+                participant Ctrl as Controller (Import)
+                participant DB as Database
+
+                Petugas->>View: Buka Menu Import Data
+                View-->>Petugas: Tampilkan Form Upload
+                Petugas->>View: Upload File CSV & Klik Import
+                View->>Ctrl: Kirim File CSV
+                Ctrl->>Ctrl: Parsing & Validasi Format CSV
+                
+                alt Format Valid
+                    Ctrl->>DB: Batch Insert Data
+                    DB-->>Ctrl: Return Sukses
+                    Ctrl-->>View: Tampilkan Notifikasi Berhasil
+                else Format Salah
+                    Ctrl-->>View: Tampilkan Notifikasi Error Format
+                end
+        </div>
+    </div>
+
+    <div class="diagram-container">
+        <h2>9. Logout</h2>
+        <div class="mermaid">
+            sequenceDiagram
+                autonumber
+                actor Petugas as Petugas/Admin
+                participant View as View (Dashboard)
+                participant Ctrl as Controller (Auth)
+                participant Session as Session Storage
+
+                Petugas->>View: Klik Tombol Logout
+                View->>Ctrl: Request Logout
+                Ctrl->>Session: Destroy Session Data
+                Session-->>Ctrl: Session Cleared
+                Ctrl-->>View: Redirect ke Halaman Login
+                View-->>Petugas: Tampilkan Halaman Login
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>

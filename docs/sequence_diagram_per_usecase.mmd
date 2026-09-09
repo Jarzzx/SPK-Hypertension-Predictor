@@ -1,0 +1,190 @@
+%% ==========================================
+%% 1. SEQUENCE DIAGRAM: LOGIN
+%% ==========================================
+sequenceDiagram
+    autonumber
+    actor Petugas as Petugas/Admin
+    participant View as View (Login Page)
+    participant Ctrl as Controller (Auth)
+    participant DB as Database (User)
+
+    Petugas->>View: Mengakses Halaman Login
+    View-->>Petugas: Menampilkan Form Login
+    Petugas->>View: Memasukkan Username & Password
+    View->>Ctrl: Kirim Data Login (POST)
+    Ctrl->>DB: Cek Kredensial User
+    DB-->>Ctrl: Return Hasil Validasi
+    
+    alt Login Berhasil
+        Ctrl-->>View: Redirect ke Dashboard
+        View-->>Petugas: Tampilkan Dashboard Utama
+    else Login Gagal
+        Ctrl-->>View: Return Pesan Error
+        View-->>Petugas: Tampilkan Notifikasi Gagal
+    end
+
+
+%% ==========================================
+%% 2. SEQUENCE DIAGRAM: KELOLA DATA PASIEN
+%% ==========================================
+sequenceDiagram
+    autonumber
+    actor Petugas as Petugas/Admin
+    participant View as View (Data Pasien)
+    participant Ctrl as Controller (Pasien)
+    participant DB as Database (Tabel Pasien)
+
+    Petugas->>View: Pilih Menu Data Pasien
+    View->>Ctrl: Request List Pasien
+    Ctrl->>DB: Query Select All Pasien
+    DB-->>Ctrl: Return Data Pasien
+    Ctrl-->>View: Tampilkan Tabel Data Pasien
+
+    opt Tambah Data Baru
+        Petugas->>View: Klik Tombol Tambah
+        View-->>Petugas: Tampilkan Form Input
+        Petugas->>View: Input Data & Klik Simpan
+        View->>Ctrl: Submit Data (POST)
+        Ctrl->>DB: Insert Data Pasien
+        DB-->>Ctrl: Return Sukses
+        Ctrl-->>View: Refresh Halaman/Tabel
+    end
+
+    opt Edit Data
+        Petugas->>View: Klik Tombol Edit
+        View->>Ctrl: Request Data by ID
+        Ctrl->>DB: Query Select One
+        DB-->>Ctrl: Return Data Pasien
+        Ctrl-->>View: Tampilkan Form Edit
+        Petugas->>View: Update Data & Klik Simpan
+        View->>Ctrl: Submit Update (POST)
+        Ctrl->>DB: Update Data Pasien
+        DB-->>Ctrl: Return Sukses
+    end
+
+    opt Hapus Data
+        Petugas->>View: Klik Tombol Hapus
+        View->>Ctrl: Request Delete ID
+        Ctrl->>DB: Delete Data Pasien
+        DB-->>Ctrl: Return Sukses
+        Ctrl-->>View: Refresh Halaman/Tabel
+    end
+
+
+%% ==========================================
+%% 3. SEQUENCE DIAGRAM: KELOLA CHECKUP (NAIVE BAYES)
+%% ==========================================
+sequenceDiagram
+    autonumber
+    actor Petugas as Petugas/Admin
+    participant View as View (Form Checkup)
+    participant Ctrl as Controller (Diagnosa)
+    participant DB as Database (Checkups)
+
+    Petugas->>View: Pilih Menu Checkup
+    View->>Ctrl: Request Halaman Checkup
+    Ctrl-->>View: Tampilkan Form Checkup
+    
+    Petugas->>View: Pilih Pasien & Input Gejala (Tensi, BMI, dll)
+    View->>Ctrl: Submit Data Checkup
+    
+    rect rgb(240, 248, 255)
+        note over Ctrl: Proses Perhitungan Naive Bayes
+        Ctrl->>DB: Ambil Data Training/Probabilitas
+        DB-->>Ctrl: Return Data Statistik
+        Ctrl->>Ctrl: Hitung Probabilitas Posterior
+        Ctrl->>Ctrl: Tentukan Klasifikasi (Ya/Tidak)
+    end
+
+    Ctrl->>DB: Simpan Hasil Checkup & Klasifikasi
+    DB-->>Ctrl: Return Sukses
+    Ctrl-->>View: Tampilkan Hasil Prediksi ke User
+
+
+%% ==========================================
+%% 4. SEQUENCE DIAGRAM: LIHAT HASIL PREDIKSI
+%% ==========================================
+sequenceDiagram
+    autonumber
+    actor Petugas as Petugas/Admin
+    participant View as View (Hasil Prediksi)
+    participant Ctrl as Controller (Laporan)
+    participant DB as Database (Checkups)
+
+    Petugas->>View: Pilih Menu Hasil Prediksi
+    View->>Ctrl: Request Data Hasil
+    Ctrl->>DB: Query Join Pasien & Checkups
+    DB-->>Ctrl: Return Data Lengkap
+    Ctrl-->>View: Tampilkan Tabel Riwayat Prediksi
+
+    opt Lihat Detail Perhitungan
+        Petugas->>View: Klik Tombol Detail
+        View->>Ctrl: Request Detail by ID
+        Ctrl->>DB: Query Data Detail
+        DB-->>Ctrl: Return Data Detail
+        Ctrl-->>View: Tampilkan Rincian Nilai Probabilitas
+    end
+
+
+%% ==========================================
+%% 5. SEQUENCE DIAGRAM: CETAK LAPORAN
+%% ==========================================
+sequenceDiagram
+    autonumber
+    actor Petugas as Petugas/Admin
+    participant View as View (Laporan Page)
+    participant Ctrl as Controller (Report)
+    participant DB as Database (Checkups)
+
+    Petugas->>View: Buka Menu Laporan
+    View-->>Petugas: Tampilkan Form Filter
+    Petugas->>View: Pilih Periode Tanggal & Klik Cetak
+    View->>Ctrl: Request Generate PDF
+    Ctrl->>DB: Query Data Berdasarkan Tanggal
+    DB-->>Ctrl: Return Data Filtered
+    Ctrl->>Ctrl: Generate File PDF (DomPDF/FPDF)
+    Ctrl-->>View: Return File PDF
+    View-->>Petugas: Dialog Download/Print
+
+
+%% ==========================================
+%% 6. SEQUENCE DIAGRAM: IMPORT DATA CSV
+%% ==========================================
+sequenceDiagram
+    autonumber
+    actor Petugas as Petugas/Admin
+    participant View as View (Import Page)
+    participant Ctrl as Controller (Import)
+    participant DB as Database
+
+    Petugas->>View: Buka Menu Import Data
+    View-->>Petugas: Tampilkan Form Upload
+    Petugas->>View: Upload File CSV & Klik Import
+    View->>Ctrl: Kirim File CSV
+    Ctrl->>Ctrl: Parsing & Validasi Format CSV
+    
+    alt Format Valid
+        Ctrl->>DB: Batch Insert Data
+        DB-->>Ctrl: Return Sukses
+        Ctrl-->>View: Tampilkan Notifikasi Berhasil
+    else Format Salah
+        Ctrl-->>View: Tampilkan Notifikasi Error Format
+    end
+
+
+%% ==========================================
+%% 7. SEQUENCE DIAGRAM: LOGOUT
+%% ==========================================
+sequenceDiagram
+    autonumber
+    actor Petugas as Petugas/Admin
+    participant View as View (Dashboard)
+    participant Ctrl as Controller (Auth)
+    participant Session as Session Storage
+
+    Petugas->>View: Klik Tombol Logout
+    View->>Ctrl: Request Logout
+    Ctrl->>Session: Destroy Session Data
+    Session-->>Ctrl: Session Cleared
+    Ctrl-->>View: Redirect ke Halaman Login
+    View-->>Petugas: Tampilkan Halaman Login

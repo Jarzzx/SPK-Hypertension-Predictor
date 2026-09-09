@@ -1,0 +1,31 @@
+%% ==========================================
+%% ALUR PROSES BISNIS SAAT INI (MANUAL)
+%% ==========================================
+flowchart TD
+    Start((Mulai)) --> PasienDatang[Pasien Datang ke Puskesmas]
+    PasienDatang --> AmbilAntrian[Ambil Nomor Antrian]
+    AmbilAntrian --> Tunggu[Menunggu Panggilan]
+    
+    Tunggu --> Panggil[Dipanggil ke Meja Pemeriksaan]
+    Panggil --> CekFisik[Petugas Melakukan Cek Fisik/Tensi]
+    CekFisik --> CatatManual[Petugas Mencatat Hasil di Buku Besar]
+    
+    CatatManual --> AnalisaDokter[Dokter Menganalisa Hasil Cek]
+    AnalisaDokter --> Diagnosa{Diagnosa Hipertensi?}
+    
+    Diagnosa -- Ya --> BeriObat[Dokter Memberikan Resep Obat]
+    Diagnosa -- Tidak --> Saran[Dokter Memberikan Saran Kesehatan]
+    
+    BeriObat --> SimpanRM[Simpan di Rekam Medis Manual]
+    Saran --> SimpanRM
+    
+    SimpanRM --> RekapLaporan[Petugas Rekap Laporan Bulanan Manual]
+    RekapLaporan --> Selesai((Selesai))
+
+    %% Styling
+    classDef startend fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef process fill:#fff,stroke:#333,stroke-width:1px;
+    classDef decision fill:#fff9c4,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5;
+    
+    class Start,Selesai startend;
+    class Diagnosa decision;

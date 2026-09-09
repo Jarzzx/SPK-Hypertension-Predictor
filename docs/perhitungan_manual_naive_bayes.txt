@@ -1,0 +1,137 @@
+PERHITUNGAN MANUAL METODE NAIVE BAYES
+Studi Kasus: Sistem Pakar Prediksi Risiko Hipertensi
+Sampel Data: Pasien AINI (ID: 11)
+
+A. DATA SAMPEL (X)
+------------------------------------------------------------------
+Diketahui data pasien sebagai berikut (dipetakan ke dalam 11 indikator):
+
+X1  : Usia                   = 52 Tahun (< 60 Tahun)
+X2  : Jenis Kelamin          = Perempuan
+X3  : Tekanan Darah          = 150/84 mmHg (Stage 1)
+X4  : Gula Darah             = 165 mg/dL (Diabetes)
+X5  : BMI                    = 31.79 (Obese)
+X6  : Lingkar Pinggang       = 102 cm (Very High)
+X7  : Riwayat Keluarga       = Tidak Ada
+X8  : Riwayat Pribadi        = Tidak Ada
+X9  : Status Merokok         = Tidak Merokok
+X10 : Aktivitas Fisik        = Ringan
+X11 : Konsumsi Buah/Sayur    = Cukup
+
+B. DEFINISI KELAS (C)
+------------------------------------------------------------------
+C1 : Tidak Berpotensi
+C2 : Cukup Berpotensi
+C3 : Sangat Berpotensi
+
+Prior Probability P(C) diasumsikan seragam:
+P(C1) = P(C2) = P(C3) = 0.33
+
+C. PERHITUNGAN PROBABILITAS POSTERIOR
+------------------------------------------------------------------
+Rumus Umum:
+P(Ck|X) = P(Ck) × P(X1|Ck) × P(X2|Ck) × ... × P(X11|Ck)
+
+1. Kelas: Tidak Berpotensi (C1)
+------------------------------------------------------------------
+P(C1|X) = P(C1) × P(X1|C1) × P(X2|C1) × P(X3|C1) × P(X4|C1) × P(X5|C1) 
+          × P(X6|C1) × P(X7|C1) × P(X8|C1) × P(X9|C1) × P(X10|C1) × P(X11|C1)
+
+        = 0.33 × 0.4 × 0.4 × 0.1 × 0.2 × 0.2 × 0.2 × 0.8 × 0.8 × 0.8 × 0.2 × 0.8
+        
+        = 0.33 × 0.00001048576
+        
+        = 0.0000034603
+
+2. Kelas: Cukup Berpotensi (C2)
+------------------------------------------------------------------
+P(C2|X) = P(C2) × P(X1|C2) × P(X2|C2) × P(X3|C2) × P(X4|C2) × P(X5|C2) 
+          × P(X6|C2) × P(X7|C2) × P(X8|C2) × P(X9|C2) × P(X10|C2) × P(X11|C2)
+
+        = 0.33 × 0.5 × 0.5 × 0.7 × 0.3 × 0.3 × 0.3 × 0.3 × 0.3 × 0.3 × 0.7 × 0.3
+        
+        = 0.33 × 0.00002679075
+        
+        = 0.0000088409
+
+3. Kelas: Sangat Berpotensi (C3)
+------------------------------------------------------------------
+P(C3|X) = P(C3) × P(X1|C3) × P(X2|C3) × P(X3|C3) × P(X4|C3) × P(X5|C3) 
+          × P(X6|C3) × P(X7|C3) × P(X8|C3) × P(X9|C3) × P(X10|C3) × P(X11|C3)
+
+        = 0.33 × 0.1 × 0.6 × 0.1 × 0.9 × 0.9 × 0.9 × 0.1 × 0.1 × 0.1 × 0.1 × 0.1
+        
+        = 0.33 × 0.00000004374
+        
+        = 0.0000000144
+
+D. NORMALISASI & KESIMPULAN
+------------------------------------------------------------------
+Total Probabilitas = P(C1|X) + P(C2|X) + P(C3|X)
+                   = 0.0000034603 + 0.0000088409 + 0.0000000144
+                   = 0.0000123156
+
+Persentase Keyakinan:
+1. P(Tidak Berpotensi)  = 0.0000034603 / 0.0000123156 = 0.2809 (28.09%)
+2. P(Cukup Berpotensi)  = 0.0000088409 / 0.0000123156 = 0.7179 (71.79%)
+3. P(Sangat Berpotensi) = 0.0000000144 / 0.0000123156 = 0.0011 (0.11%)
+
+KESIMPULAN AKHIR:
+Berdasarkan nilai probabilitas tertinggi, sistem memprediksi pasien masuk ke dalam kelas:
+"CUKUP BERPOTENSI" (71.79%)
+
+==================================================================
+
+Sampel Data 2: Pasien BUDI SANTOSO (Sampel 3)
+
+A. DATA SAMPEL (X)
+------------------------------------------------------------------
+Diketahui data pasien sebagai berikut:
+
+X1  : Usia                   = 45 Tahun (Dewasa Akhir)
+X2  : Jenis Kelamin          = Laki-laki
+X3  : Tekanan Darah          = 145/90 mmHg (Stage 2)
+X4  : Gula Darah             = 120 mg/dL (Prediabetes)
+X5  : BMI                    = 27.55 (Overweight)
+X6  : Lingkar Pinggang       = 95 cm (Tinggi)
+X7  : Riwayat Keluarga       = Ada
+X8  : Riwayat Pribadi        = Tidak Ada
+X9  : Status Merokok         = Merokok
+X10 : Aktivitas Fisik        = Ringan
+X11 : Konsumsi Buah/Sayur    = Kurang
+
+B. PERHITUNGAN PROBABILITAS POSTERIOR
+------------------------------------------------------------------
+
+1. Kelas: Tidak Berpotensi (C1)
+------------------------------------------------------------------
+P(C1|X) = P(C1) × P(X1..X11|C1)
+        = 0.33 × 0.2 × 0.3 × 0.01 × 0.1 × 0.1 × 0.1 × 0.1 × 0.8 × 0.1 × 0.2 × 0.1
+        = 0.0000000000 (Sangat Kecil)
+
+2. Kelas: Cukup Berpotensi (C2)
+------------------------------------------------------------------
+P(C2|X) = P(C2) × P(X1..X11|C2)
+        = 0.33 × 0.5 × 0.4 × 0.2 × 0.4 × 0.5 × 0.4 × 0.3 × 0.5 × 0.2 × 0.4 × 0.3
+        = 0.0000038396
+
+3. Kelas: Sangat Berpotensi (C3)
+------------------------------------------------------------------
+P(C3|X) = P(C3) × P(X1..X11|C3)
+        = 0.33 × 0.5 × 0.6 × 0.8 × 0.6 × 0.5 × 0.6 × 0.7 × 0.5 × 0.8 × 0.6 × 0.7
+        = 0.0016932707
+
+C. NORMALISASI & KESIMPULAN
+------------------------------------------------------------------
+Total Probabilitas = 0.0000000000 + 0.0000038396 + 0.0016932707
+                   = 0.0016971103
+
+Persentase Keyakinan:
+1. P(Tidak Berpotensi)  = 0.0000%
+2. P(Cukup Berpotensi)  = 0.23%
+3. P(Sangat Berpotensi) = 99.77%
+
+KESIMPULAN AKHIR:
+Berdasarkan nilai probabilitas tertinggi, sistem memprediksi pasien masuk ke dalam kelas:
+"SANGAT BERPOTENSI" (99.77%)
+

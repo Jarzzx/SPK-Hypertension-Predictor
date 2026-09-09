@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Alur Bisnis Usulan (Swimlane)</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Alur Bisnis Usulan (Sistem Baru)</h1>
+    <div class="container">
+        <div class="mermaid">
+flowchart TD
+    %% Styles
+    classDef plain fill:#fff,stroke:#000,stroke-width:1px,color:#000;
+    classDef start fill:#000,stroke:#000,stroke-width:1px;
+    classDef endNode fill:#000,stroke:#000,stroke-width:4px,color:#fff,shape:circle;
+    classDef decision fill:#fff,stroke:#000,stroke-width:1px,color:#000,shape:rhombus;
+    classDef systemProcess fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:#000;
+
+    %% Lane 1: Petugas
+    subgraph Petugas ["Petugas / Admin"]
+        Start(( )):::start
+        P1[Login ke Sistem]:::plain
+        P2[Masuk Dashboard]:::plain
+        P3{Sumber Data?}:::decision
+        
+        %% Action Nodes
+        P4[Input Data Manual<br>(Per Pasien)]:::plain
+        P5[Import File CSV<br>(Data Penyuluhan)]:::plain
+        
+        P6[Lihat Hasil Prediksi]:::plain
+        P7[Cetak Laporan PDF]:::plain
+        Finish(( )):::endNode
+    end
+
+    %% Lane 2: Sistem SPK
+    subgraph Sistem ["Sistem SPK Hipertensi"]
+        S1{Validasi Login}:::decision
+        S2[Proses Simpan Data]:::systemProcess
+        S3[Hitung Probabilitas<br>Naive Bayes]:::systemProcess
+        S4[Tentukan Klasifikasi<br>(Ya/Tidak)]:::systemProcess
+        S5[Tampilkan Hasil<br>& Grafik]:::plain
+        S6[Generate Laporan]:::plain
+    end
+
+    %% Connections
+    Start --> P1 --> S1
+    S1 -- "Valid" --> P2
+    S1 -- "Gagal" --> P1
+    
+    P2 --> P3
+    
+    %% Decision Branching (Keunggulan)
+    P3 -- "Pasien Datang" --> P4
+    P3 -- "Data Massal" --> P5
+    
+    %% System Processing
+    P4 --> S2
+    P5 --> S2
+    
+    S2 --> S3 --> S4 --> S5
+    
+    S5 --> P6
+    P6 --> P7 --> S6 --> Finish
+
+    %% Alignment Hints
+    P1 ~~~ S1
+    P4 ~~~ S2
+    P6 ~~~ S5
+    P7 ~~~ S6
+
+    %% Subgraph Styling
+    style Petugas fill:#ffffff,stroke:#000,stroke-width:1px
+    style Sistem fill:#ffffff,stroke:#000,stroke-width:1px
+        </div>
+    </div>
+</body>
+</html>

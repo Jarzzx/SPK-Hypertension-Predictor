@@ -1,0 +1,109 @@
+flowchart TD
+    %% Nodes in User Swimlane
+    subgraph User_Lane ["User (Operator)"]
+        Start((Start))
+        Login["Login ke Sistem"]
+        SelectMenu["Pilih Menu Data Pasien"]
+        
+        %% Patient Input Choices
+        InputManual["Input Manual Data Pasien"]
+        ImportCSV["Upload File CSV"]
+        
+        SearchPatient["Cari & Pilih Pasien Lama"]
+        InputCheckup["Input Data Pengecekan Kesehatan"]
+        ClickProcess["Klik Tombol 'Proses Prediksi'"]
+        ViewResult["Lihat Hasil Prediksi"]
+        
+        %% Reporting
+        PrintReport["Klik 'Cetak Laporan'"]
+        DownloadPDF["Unduh/Cetak Dokumen PDF"]
+        
+        Stop((Stop))
+    end
+
+    %% Nodes in System Swimlane
+    subgraph System_Lane ["Sistem"]
+        ValidateLogin["Validasi Username & Password"]
+        ShowError["Tampilkan Pesan Error"]
+        ShowDashboard["Tampilkan Dashboard"]
+        
+        ValidateInput["Validasi Input Manual"]
+        ValidateCSV["Validasi Format CSV"]
+        
+        CalcBMI["Hitung Atribut Turunan BMI"]
+        GetLastCheckup["Ambil Data Pengecekan Terakhir"]
+        CalcProbs["Hitung Probabilitas Tiap Kriteria"]
+        CalcNB["Kalkulasi Algoritma Naive Bayes"]
+        Classify["Tentukan Hasil Klasifikasi"]
+        ShowResult["Tampilkan Hasil & Saran"]
+        
+        GeneratePDF["Generate Laporan (PDF)"]
+    end
+
+    %% Nodes in Database Swimlane
+    subgraph Database_Lane ["Database"]
+        CheckUser["Cek Data User"]
+        SavePatient["Simpan Data Pasien"]
+        SaveBatch["Simpan Data Batch (CSV)"]
+        SaveCheckup["Simpan Data Checkup"]
+        SavePrediction["Simpan Hasil Prediksi"]
+    end
+
+    %% Logic Flow
+    Start --> Login
+    Login --> ValidateLogin
+    ValidateLogin --> CheckUser
+    CheckUser --> ValidateLogin
+    
+    ValidateLogin -- "Tidak Valid" --> ShowError
+    ShowError --> Stop
+    
+    ValidateLogin -- "Valid" --> ShowDashboard
+    ShowDashboard --> SelectMenu
+    
+    %% Branching for Patient Data
+    SelectMenu -- "Pasien Baru (Manual)" --> InputManual
+    SelectMenu -- "Pasien Baru (CSV)" --> ImportCSV
+    SelectMenu -- "Pasien Lama" --> SearchPatient
+    
+    %% Manual Input Flow
+    InputManual --> ValidateInput
+    ValidateInput --> SavePatient
+    SavePatient --> InputCheckup
+    
+    %% CSV Import Flow
+    ImportCSV --> ValidateCSV
+    ValidateCSV -- "Valid" --> SaveBatch
+    ValidateCSV -- "Invalid" --> ShowError
+    SaveBatch --> SearchPatient
+    
+    %% Existing Patient Flow
+    SearchPatient --> InputCheckup
+    
+    %% Checkup & Prediction Flow
+    InputCheckup --> CalcBMI
+    CalcBMI --> SaveCheckup
+    SaveCheckup --> ClickProcess
+    
+    ClickProcess --> GetLastCheckup
+    GetLastCheckup --> CalcProbs
+    CalcProbs --> CalcNB
+    CalcNB --> Classify
+    Classify --> SavePrediction
+    SavePrediction --> ShowResult
+    ShowResult --> ViewResult
+    
+    %% Reporting Flow
+    ViewResult -- "Cetak Laporan?" --> PrintReport
+    PrintReport --> GeneratePDF
+    GeneratePDF --> DownloadPDF
+    DownloadPDF --> Stop
+    ViewResult -- "Selesai" --> Stop
+
+    %% Styling
+    style User_Lane fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    style System_Lane fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    style Database_Lane fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
+    
+    style Start fill:#2ecc71,stroke:#27ae60,color:#fff
+    style Stop fill:#e74c3c,stroke:#c0392b,color:#fff

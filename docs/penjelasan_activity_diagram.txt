@@ -1,0 +1,15 @@
+PENJELASAN ACTIVITY DIAGRAM (ALUR AKTIVITAS SISTEM)
+
+Pada activity diagram login, aktor memulai dengan mengakses halaman login aplikasi. Kemudian aktor memasukkan username dan password pada form yang tersedia. Sistem akan memvalidasi data akun tersebut; jika valid, sistem akan mengarahkan aktor ke dashboard utama, namun jika tidak valid, sistem akan menampilkan pesan error dan meminta aktor menginput ulang kredensial.
+
+Pada activity diagram kelola data pasien, aktor memilih menu data pasien untuk melihat daftar pasien yang ada. Aktor dapat memilih aksi tambah, edit, atau hapus data. Saat aktor menginput atau memperbarui identitas pasien, sistem akan memvalidasi data tersebut sebelum menyimpannya ke dalam database untuk memastikan kelengkapan informasi.
+
+Pada activity diagram checkup dan prediksi, aktor memilih menu checkup lalu memilih pasien yang akan diperiksa. Aktor menginputkan data medis seperti tekanan darah, gula darah, dan BMI. Sistem selanjutnya memproses data tersebut menggunakan algoritma Naive Bayes untuk menghitung probabilitas risiko hipertensi secara otomatis dan menyimpan hasil klasifikasi tersebut ke database.
+
+Pada activity diagram lihat hasil prediksi, aktor memilih menu hasil prediksi untuk menampilkan rekapitulasi diagnosa. Aktor dapat memilih detail salah satu pasien untuk melihat rincian perhitungan probabilitas yang telah dilakukan sistem, sehingga transparansi hasil perhitungan Naive Bayes dapat diketahui.
+
+Pada activity diagram cetak laporan, aktor memilih menu laporan dan melakukan filter berdasarkan rentang tanggal atau kategori risiko. Setelah aktor menekan tombol cetak, sistem akan memproses permintaan tersebut dan menghasilkan dokumen laporan dalam format PDF yang siap diunduh atau dicetak oleh aktor.
+
+Pada activity diagram import data, aktor memilih menu import untuk melakukan input data massal. Aktor mengunggah file berformat CSV yang berisi data pasien. Sistem akan memvalidasi format file tersebut; jika sesuai, seluruh data akan disimpan ke database secara otomatis, sedangkan jika format salah, sistem akan menolak dan memberikan notifikasi perbaikan.
+
+Pada activity diagram logout, aktor menekan tombol logout pada aplikasi. Sistem kemudian akan memproses permintaan dengan menghapus sesi login yang aktif dan mengembalikan tampilan antarmuka ke halaman login utama demi keamanan data.

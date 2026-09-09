@@ -1,0 +1,19 @@
+TABEL DATA SAMPEL (11 INDIKATOR)
+Untuk Skripsi Bab 3 atau 4
+
+Cara Pakai di Word:
+1. Copy semua teks di bawah "MULAI COPY".
+2. Paste di Word.
+3. Blok teks-nya.
+4. Pergi ke menu "Insert" -> "Table" -> "Convert Text to Table".
+5. Pilih "Separate text at: Tabs".
+6. Klik OK.
+7. Rapikan lebar kolom (karena indikatornya banyak, disarankan ubah orientasi kertas jadi Landscape untuk halaman ini).
+
+====================================================================================================
+MULAI COPY DI BAWAH INI (Format Tab-Separated)
+====================================================================================================
+Sampel	Usia	JK	Tensi (mmHg)	Gula Darah	BMI	Lingkar Pinggang	Riw. Keluarga	Riw. Pribadi	Merokok	Fisik	Sayur/Buah
+Sampel 1	52	P	160/65	165.00	27.77	92.00	Tidak Ada	Tidak Ada	Tidak	Tidak Aktif	Cukup
+Sampel 2	52	P	150/84	165.00	31.79	102.00	Tidak Ada	Tidak Ada	Tidak	Ringan	Cukup
+Sampel 3	45	L	145/90	120.00	27.55	95.00	Ada	Tidak Ada	Ya	Ringan	Kurang

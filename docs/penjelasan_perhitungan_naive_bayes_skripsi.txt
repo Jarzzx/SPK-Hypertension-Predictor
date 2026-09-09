@@ -1,0 +1,77 @@
+PENJELASAN ATRIBUT DAN PERHITUNGAN NAIVE BAYES
+
+Berikut atribut data pasien yang telah didapatkan dari UPTD Puskesmas:
+
+a. Umur:
+   < 40 Tahun = "Dewasa Awal"
+   40-59 Tahun = "Dewasa Akhir"
+   >= 60 Tahun = "Lansia"
+
+b. Tekanan Darah (Berdasarkan JNC 7):
+   Normal: Sistolik < 120 DAN Diastolik < 80
+   Elevated: Sistolik 120-129 DAN Diastolik < 80
+   Stage 1: Sistolik 130-139 ATAU Diastolik 80-89
+   Stage 2: Sistolik >= 140 ATAU Diastolik >= 90
+
+c. Gula Darah:
+   Normal: < 100 mg/dL
+   Prediabetes: 100-125 mg/dL
+   Diabetes: >= 126 mg/dL
+
+d. Indeks Massa Tubuh (BMI):
+   Underweight: < 18.5
+   Normal: 18.5 - 24.9
+   Overweight: 25 - 29.9
+   Obese: >= 30
+
+e. Lingkar Pinggang:
+   Laki-laki: Normal (<90), Tinggi (90-101), Sangat Tinggi (>=102)
+   Perempuan: Normal (<80), Tinggi (80-87), Sangat Tinggi (>=88)
+
+Dari tiga data sampel didapatlah:
+
+a. Umur
+   Untuk atribut data umur didapatlah 3 dari 3 sampel data masuk ke dalam kategori "Dewasa Akhir" (40-59 tahun).
+
+b. Jenis Kelamin
+   Pada atribut data Jenis Kelamin didapatkan 1 dari 3 sampel data merupakan "Laki-Laki" sedangkan "Perempuan" berjumlah 2 dari 3 sampel data.
+
+c. Tekanan Darah
+   Untuk atribut data Tekanan Darah, ke-3 sampel tergolong "Stage 2" (Hipertensi Tahap 2) karena tekanan sistolik >= 140 mmHg.
+
+d. Gula Darah
+   Pada atribut Gula Darah, 2 dari 3 sampel masuk kategori "Diabetes" (>= 126 mg/dL) dan 1 sampel "Prediabetes".
+
+e. BMI
+   Sebanyak 1 dari 3 sampel masuk kategori "Obese" (Sumarni) dan 2 sampel "Overweight" (Aini & Budi).
+
+Dari ke-tiga sampel data pasien dan juga atribut data yang telah dikategorikan, maka perhitungan Naive Bayes akan seperti dibawah ini.
+
+*Catatan Penting: Perhitungan di bawah ini adalah simulasi sederhana menggunakan 1x data pengecekan untuk keperluan penjelasan manual (Skripsi).*
+
+Rumus Dasar:
+P(Hipertensi|X) = P(Usia) × P(JK) × P(Tensi) × P(Gula) × P(BMI)
+
+1. Sampel 1 (Aini, 52 Tahun, Perempuan, Tensi 160/65, Gula 165, BMI 27.77, Overweight)
+
+   P(Hipertensi|Aini) = P(Dewasa Akhir) × P(Perempuan) × P(Tensi Tinggi) × P(Gula Tinggi) × P(Overweight)
+                      = 4/5 × 3/5 × 5/5 × 4/5 × 3/5
+                      = 0.8 × 0.6 × 1.0 × 0.8 × 0.6
+                      = 0.2304
+
+2. Sampel 2 (Sumarni, 52 Tahun, Perempuan, Tensi 150/84, Gula 165, BMI 31.8, Obese)
+
+   P(Hipertensi|Sumarni) = P(Dewasa Akhir) × P(Perempuan) × P(Tensi Tinggi) × P(Gula Tinggi) × P(Obese)
+                         = 4/5 × 3/5 × 5/5 × 4/5 × 9/10
+                         = 0.8 × 0.6 × 1.0 × 0.8 × 0.9
+                         = 0.3456
+
+3. Sampel 3 (Budi Santoso, 45 Tahun, Laki-laki, Tensi 145/90, Gula 120, BMI 27.55, Overweight)
+
+   P(Hipertensi|Budi) = P(Dewasa Akhir) × P(Laki-laki) × P(Tensi Tinggi) × P(Gula Sedang) × P(Overweight)
+                      = 4/5 × 2/5 × 5/5 × 3/5 × 3/5
+                      = 0.8 × 0.4 × 1.0 × 0.6 × 0.6
+                      = 0.1152
+
+4. Kesimpulan Akhir
+   Dari hasil perhitungan manual sederhana di atas, terlihat bahwa Sampel 2 (Sumarni) memiliki skor probabilitas tertinggi (0.3456) karena faktor risiko Obesitas yang lebih tinggi dibandingkan sampel lainnya, diikuti oleh Sampel 1 (Aini) dan Sampel 3 (Budi Santoso).

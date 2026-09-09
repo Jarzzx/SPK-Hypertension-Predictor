@@ -1,0 +1,68 @@
+classDiagram
+    direction TB
+    %% Class Definitions based on Database Entities and Logic
+    class User {
+        +int id
+        +string username
+        +string password
+        +string name
+        +string role
+        +datetime created_at
+        +login()
+        +logout()
+        +create()
+        +update()
+        +delete()
+    }
+
+    class Patient {
+        +int id
+        +string name
+        +int age
+        +string gender
+        +string address
+        +string phone
+        +datetime created_at
+        +datetime updated_at
+        +register()
+        +updateProfile()
+        +delete()
+        +getCheckupHistory()
+    }
+
+    class Checkup {
+        +int id
+        +int patient_id
+        +int systolic_pressure
+        +int diastolic_pressure
+        +float blood_sugar
+        +float height
+        +float weight
+        +float bmi
+        +float waist_circumference
+        +string family_history
+        +string personal_history
+        +string smoking_status
+        +string physical_activity
+        +string fruit_vegetable_consumption
+        +datetime created_at
+        +recordData()
+    }
+
+    class Prediction {
+        +int id
+        +int patient_id
+        +string status
+        +float probability
+        +float confidence
+        +datetime created_at
+        +calculateNaiveBayes()
+        +saveResult()
+        +getStats()
+    }
+
+    %% Relationships
+    Patient "1" --> "*" Checkup : has
+    Patient "1" --> "*" Prediction : has
+    User ..> Patient : manages
+    User ..> Prediction : generates

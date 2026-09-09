@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Alur Bisnis Saat Ini - UPTD Puskesmas Pekan Heran</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; text-align: center; }
+        .mermaid { margin: 0 auto; max-width: 100%; }
+    </style>
+</head>
+<body>
+    <h2>Alur Bisnis Saat Ini (AS-IS) - UPTD Puskesmas Pekan Heran</h2>
+    <div class="mermaid">
+flowchart TD
+    %% Nodes in Warga Swimlane
+    subgraph Warga_Lane ["Warga / Masyarakat"]
+        Start((Start))
+        Visit["Berkunjung ke Puskesmas"]
+        Attend["Hadir di Agenda Penyuluhan"]
+        CheckupProcess["Melakukan Pemeriksaan Kesehatan"]
+    end
+
+    %% Nodes in Petugas Swimlane
+    subgraph Petugas_Lane ["Petugas Puskesmas"]
+        ConductCheckup["Melakukan Cek Kesehatan & Wawancara"]
+        IdentifyLocation{"Lokasi Kegiatan?"}
+        TryAccess["Coba Akses Sistem E-Pus"]
+        ManualInput["Mencatat Data Secara Manual\n(Buku Register / Kertas)"]
+        InputSystem["Input Data ke Sistem E-Pus"]
+        DataFragmented["Data Tersimpan (Sering Terpisah/Tidak Terintegrasi)"]
+        End((Selesai))
+    end
+
+    %% Nodes in E-Pus Swimlane
+    subgraph EPus_Lane ["Sistem E-Pus (Eksisting)"]
+        CheckNetwork{"Cek Koneksi / Status Sistem"}
+        AccessDenied["Gagal Akses (Jaringan Lokal Only)"]
+        SystemMaintenance["Sistem Maintenance / Lambat\n(Optimasi Kurang)"]
+        SystemReady["Sistem Siap"]
+        SaveLocal["Simpan ke Database Lokal"]
+    end
+
+    %% Connections
+    Start --> Visit
+    Start --> Attend
+    Visit --> CheckupProcess
+    Attend --> CheckupProcess
+    CheckupProcess --> ConductCheckup
+    ConductCheckup --> IdentifyLocation
+
+    %% Branch 1: Penyuluhan (Luar Lokasi)
+    IdentifyLocation -- "Luar Puskesmas (Penyuluhan)" --> AccessDenied
+    AccessDenied --> ManualInput
+
+    %% Branch 2: Di Puskesmas
+    IdentifyLocation -- "Di Gedung Puskesmas" --> TryAccess
+    TryAccess --> CheckNetwork
+    
+    %% Branch 2a: Sistem Bermasalah
+    CheckNetwork -- "Maintenance / Jaringan Sibuk" --> SystemMaintenance
+    SystemMaintenance --> ManualInput
+    
+    %% Branch 2b: Sistem Normal
+    CheckNetwork -- "Normal" --> SystemReady
+    SystemReady --> InputSystem
+    InputSystem --> SaveLocal
+
+    %% End Flow
+    ManualInput --> DataFragmented
+    SaveLocal --> DataFragmented
+    DataFragmented --> End
+
+    %% Styling
+    classDef red fill:#ffcccc,stroke:#ff0000,stroke-width:2px;
+    classDef yellow fill:#ffffcc,stroke:#cca300,stroke-width:2px;
+    
+    class AccessDenied,SystemMaintenance red;
+    class ManualInput yellow;
+    </div>
+</body>
+</html>

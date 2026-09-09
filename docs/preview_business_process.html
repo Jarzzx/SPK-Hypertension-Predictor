@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perbandingan Proses Bisnis - SPK Hipertensi</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background: #f0f2f5; color: #333; }
+        .main-container { max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; flex-wrap: wrap; }
+        .diagram-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); flex: 1; min-width: 400px; }
+        h1 { text-align: center; margin-bottom: 30px; color: #2c3e50; }
+        h2 { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; color: #34495e; font-size: 1.5em; }
+        .badge { display: inline-block; padding: 5px 10px; border-radius: 4px; font-size: 0.8em; font-weight: bold; margin-bottom: 15px; }
+        .badge-old { background: #ffebee; color: #c62828; }
+        .badge-new { background: #e3f2fd; color: #1565c0; }
+        .mermaid { text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Perbandingan Alur Proses Bisnis</h1>
+    
+    <div class="main-container">
+        <!-- DIAGRAM 1: SAAT INI (MANUAL) -->
+        <div class="diagram-card">
+            <h2><span class="badge badge-old">BEFORE</span> Proses Bisnis Saat Ini (Manual)</h2>
+            <p>Alur pelayanan pasien dan diagnosa yang berjalan secara konvensional/manual sebelum adanya sistem.</p>
+            <div class="mermaid">
+                flowchart TD
+                    Start((Mulai)) --> PasienDatang[Pasien Datang]
+                    PasienDatang --> AmbilAntrian[Ambil Antrian]
+                    AmbilAntrian --> CekFisik[Pemeriksaan Fisik/Tensi]
+                    CekFisik --> CatatManual[Catat Manual di Buku]
+                    
+                    CatatManual --> AnalisaDokter[Analisa Dokter]
+                    AnalisaDokter --> Diagnosa{Hipertensi?}
+                    
+                    Diagnosa -- Ya --> Resep[Beri Resep]
+                    Diagnosa -- Tidak --> Saran[Saran Kesehatan]
+                    
+                    Resep --> SimpanRM[Arsip Rekam Medis Fisik]
+                    Saran --> SimpanRM
+                    
+                    SimpanRM --> RekapLaporan[Rekap Laporan Manual]
+                    RekapLaporan --> Selesai((Selesai))
+
+                    %% Styling Old
+                    classDef startend fill:#ffebee,stroke:#c62828,stroke-width:2px;
+                    classDef process fill:#fff,stroke:#333,stroke-width:1px;
+                    classDef decision fill:#fff9c4,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5;
+                    
+                    class Start,Selesai startend;
+                    class Diagnosa decision;
+            </div>
+        </div>
+
+        <!-- DIAGRAM 2: USULAN (SISTEM) -->
+        <div class="diagram-card">
+            <h2><span class="badge badge-new">AFTER</span> Proses Bisnis Usulan (Sistem SPK)</h2>
+            <p>Alur pelayanan yang telah terkomputerisasi dengan metode Naive Bayes.</p>
+            <div class="mermaid">
+                flowchart TD
+                    Start((Mulai)) --> Login[Login Petugas]
+                    Login --> Dashboard[Dashboard Sistem]
+                    
+                    Dashboard --> InputPasien[Input/Cek Data Pasien]
+                    InputPasien --> InputGejala[Input Gejala Diagnosa]
+                    
+                    InputGejala --> SistemHitung[Sistem Hitung Naive Bayes]
+                    SistemHitung --> TampilHasil[Hasil Prediksi Otomatis]
+                    
+                    TampilHasil --> SimpanDB[Simpan Database]
+                    SimpanDB --> CetakLaporan[Cetak Laporan Otomatis]
+                    CetakLaporan --> Selesai((Selesai))
+
+                    %% Styling New
+                    classDef startend fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
+                    classDef process fill:#fff,stroke:#333,stroke-width:1px;
+                    classDef auto fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+                    
+                    class Start,Selesai startend;
+                    class SistemHitung,TampilHasil auto;
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', flowchart: { curve: 'basis' } });
+    </script>
+</body>
+</html>

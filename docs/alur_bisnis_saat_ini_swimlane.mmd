@@ -1,0 +1,46 @@
+flowchart TD
+    %% Styling Clean (Mirip Reference)
+    classDef plain fill:#fff,stroke:#000,stroke-width:1px,color:#000;
+    classDef start fill:#000,stroke:#000,stroke-width:1px;
+    classDef endNode fill:#000,stroke:#000,stroke-width:4px,color:#fff,shape:circle;
+    classDef decision fill:#fff,stroke:#000,stroke-width:1px,color:#000,shape:rhombus;
+
+    %% Lane 1: Warga
+    subgraph Warga ["Warga / Masyarakat"]
+        Start(( )):::start
+        W1[Datang ke Puskesmas /<br>Hadir Penyuluhan]:::plain
+        W2[Melakukan Pemeriksaan]:::plain
+    end
+
+    %% Lane 2: Petugas
+    subgraph Petugas ["Petugas Puskesmas"]
+        P1[Melakukan Cek Kesehatan<br>& Wawancara]:::plain
+        P2{Lokasi /<br>Akses Sistem?}:::decision
+        P3[Pencatatan Data<br>Secara Manual]:::plain
+        P4[Data Tersimpan<br>di Buku Register]:::plain
+        Finish(( )):::endNode
+    end
+
+    %% Flow (Zig-Zag)
+    Start --> W1
+    W1 --> P1
+    
+    %% Warga -> Petugas
+    P1 --> W2
+    W2 --> P2
+    
+    %% Decision Flow
+    P2 -- "Luar Gedung /<br>Sistem Error" --> P3
+    P2 -- "Di Puskesmas" --> P3
+    %% Note: Even in Puskesmas, often manual due to issues described
+    
+    P3 --> P4
+    P4 --> Finish
+
+    %% Alignment Hints
+    W1 ~~~ P1
+    W2 ~~~ P2
+
+    %% Styling Subgraphs
+    style Warga fill:#ffffff,stroke:#000,stroke-width:1px
+    style Petugas fill:#ffffff,stroke:#000,stroke-width:1px

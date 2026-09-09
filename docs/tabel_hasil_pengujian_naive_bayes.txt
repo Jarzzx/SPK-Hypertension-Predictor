@@ -1,0 +1,11 @@
+Tabel 3.2 Hasil Pengujian Metode Naive Bayes pada Data Sampel Pasien UPTD Puskesmas Pekan Heran
+
+Sampel	Kategori Usia	Jenis Kelamin	Tekanan Darah	Riwayat Penyakit / Faktor Risiko	Hasil
+Sampel 1	Dewasa Akhir	P	Tinggi (160/65)	DM + HT (Diabetes + Hipertensi)	0.2304
+Sampel 2	Dewasa Akhir	P	Tinggi (150/84)	DM + HT + Obesitas	0.3456
+Sampel 3	Dewasa Akhir	L	Tinggi (145/90)	HT (Hipertensi)	0.1152
+
+Keterangan:
+- DM: Diabetes Melitus (Gula Darah >= 126 mg/dL)
+- HT: Hipertensi (Tekanan Darah Stage 2)
+- Obesitas: BMI >= 30

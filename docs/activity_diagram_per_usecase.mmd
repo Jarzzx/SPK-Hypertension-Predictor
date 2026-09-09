@@ -1,0 +1,206 @@
+flowchart TD
+    %% Global Styles
+    classDef plain fill:#fff,stroke:#000,stroke-width:1px,color:#000;
+    classDef start fill:#000,stroke:#000,stroke-width:1px;
+    classDef endNode fill:#000,stroke:#000,stroke-width:4px,color:#fff,shape:circle;
+    classDef decision fill:#fff,stroke:#000,stroke-width:1px,color:#000,shape:rhombus;
+    classDef systemProcess fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:#000;
+
+    %% ======================================================================================
+    %% 1. ACTIVITY DIAGRAM SWIMLANE: LOGIN
+    %% ======================================================================================
+    subgraph UC_Login ["Use Case: Login"]
+        direction TB
+        
+        subgraph L_Operator ["Aktor: Operator Puskesmas"]
+            direction TB
+            L_Start((Start)):::start
+            L1[Buka Aplikasi]:::plain
+            L2[Input Username & Password]:::plain
+            L5[Melihat Dashboard Utama]:::plain
+            L6[Menerima Pesan Error]:::plain
+        end
+
+        subgraph L_Sistem ["Sistem SPK"]
+            direction TB
+            L3{Validasi Akun?}:::decision
+            L4[Redirect ke Dashboard]:::systemProcess
+        end
+
+        %% Flow Login
+        L_Start --> L1
+        L1 --> L2
+        L2 --> L3
+        L3 -- "Valid" --> L4
+        L3 -- "Invalid" --> L6
+        L4 --> L5
+        L6 --> L2
+    end
+
+    %% ======================================================================================
+    %% 2. ACTIVITY DIAGRAM SWIMLANE: KELOLA DATA PASIEN
+    %% ======================================================================================
+    subgraph UC_Pasien ["Use Case: Kelola Data Pasien"]
+        direction TB
+        
+        subgraph P_Operator ["Aktor: Operator Puskesmas"]
+            P_Start((Start)):::start
+            P1[Pilih Menu Data Pasien]:::plain
+            P3[Klik Tambah / Edit / Hapus]:::plain
+            P4[Input / Update Data Pasien]:::plain
+            P7[Melihat Data Terupdate]:::plain
+        end
+
+        subgraph P_Sistem ["Sistem SPK"]
+            P2[Tampilkan Daftar Pasien]:::systemProcess
+            P5{Validasi Data?}:::decision
+            P6[Simpan / Update ke Database]:::systemProcess
+        end
+
+        %% Flow Pasien
+        P_Start --> P1
+        P1 --> P2
+        P2 --> P3
+        P3 --> P4
+        P4 --> P5
+        P5 -- "Valid" --> P6
+        P5 -- "Tidak Valid" --> P4
+        P6 --> P7
+    end
+
+    %% ======================================================================================
+    %% 3. ACTIVITY DIAGRAM SWIMLANE: KELOLA DATA CHECKUP & PREDIKSI
+    %% ======================================================================================
+    subgraph UC_Checkup ["Use Case: Kelola Checkup & Prediksi"]
+        direction TB
+        
+        subgraph C_Operator ["Aktor: Operator Puskesmas"]
+            C_Start((Start)):::start
+            C1[Pilih Menu Checkup]:::plain
+            C3[Pilih Pasien & Input Data Medis<br>(Tensi, BMI, Gula, dll)]:::plain
+            C6[Melihat Hasil Klasifikasi]:::plain
+        end
+
+        subgraph C_Sistem ["Sistem SPK"]
+            C2[Tampilkan Form Checkup]:::systemProcess
+            C4[Hitung Metode Naive Bayes]:::systemProcess
+            C5[Simpan Hasil & Status Risiko]:::systemProcess
+        end
+
+        %% Flow Checkup
+        C_Start --> C1
+        C1 --> C2
+        C2 --> C3
+        C3 --> C4
+        C4 --> C5
+        C5 --> C6
+    end
+
+    %% ======================================================================================
+    %% 4. ACTIVITY DIAGRAM SWIMLANE: LIHAT HASIL PREDIKSI
+    %% ======================================================================================
+    subgraph UC_Hasil ["Use Case: Lihat Hasil Prediksi"]
+        direction TB
+
+        subgraph H_Operator ["Aktor: Operator Puskesmas"]
+            H_Start((Start)):::start
+            H1[Pilih Menu Hasil Prediksi]:::plain
+            H3[Pilih Detail Pasien]:::plain
+            H5[Melihat Detail Perhitungan]:::plain
+        end
+
+        subgraph H_Sistem ["Sistem SPK"]
+            H2[Tampilkan Tabel Hasil Prediksi]:::systemProcess
+            H4[Tampilkan Detail & Nilai Probabilitas]:::systemProcess
+        end
+
+        %% Flow Hasil
+        H_Start --> H1
+        H1 --> H2
+        H2 --> H3
+        H3 --> H4
+        H4 --> H5
+    end
+
+    %% ======================================================================================
+    %% 5. ACTIVITY DIAGRAM SWIMLANE: CETAK LAPORAN
+    %% ======================================================================================
+    subgraph UC_Laporan ["Use Case: Cetak Laporan"]
+        direction TB
+
+        subgraph R_Operator ["Aktor: Operator Puskesmas"]
+            R_Start((Start)):::start
+            R1[Pilih Menu Laporan]:::plain
+            R3[Filter Tanggal / Kategori]:::plain
+            R4[Klik Cetak PDF]:::plain
+            R6[Download / Print Dokumen]:::plain
+        end
+
+        subgraph R_Sistem ["Sistem SPK"]
+            R2[Tampilkan Halaman Filter]:::systemProcess
+            R5[Generate Laporan PDF]:::systemProcess
+        end
+
+        %% Flow Laporan
+        R_Start --> R1
+        R1 --> R2
+        R2 --> R3
+        R3 --> R4
+        R4 --> R5
+        R5 --> R6
+    end
+
+    %% ======================================================================================
+    %% 6. ACTIVITY DIAGRAM SWIMLANE: IMPORT DATA CSV
+    %% ======================================================================================
+    subgraph UC_Import ["Use Case: Import Data CSV"]
+        direction TB
+
+        subgraph I_Operator ["Aktor: Operator Puskesmas"]
+            I_Start((Start)):::start
+            I1[Pilih Menu Import]:::plain
+            I3[Upload File CSV]:::plain
+            I6[Menerima Notifikasi Sukses]:::plain
+            I7[Perbaiki File CSV]:::plain
+        end
+
+        subgraph I_Sistem ["Sistem SPK"]
+            I2[Tampilkan Form Upload]:::systemProcess
+            I4{Cek Format & Validasi?}:::decision
+            I5[Proses Import ke Database]:::systemProcess
+        end
+
+        %% Flow Import
+        I_Start --> I1
+        I1 --> I2
+        I2 --> I3
+        I3 --> I4
+        I4 -- "Valid" --> I5
+        I4 -- "Invalid" --> I7
+        I7 --> I3
+        I5 --> I6
+    end
+
+    %% ======================================================================================
+    %% 7. ACTIVITY DIAGRAM SWIMLANE: LOGOUT
+    %% ======================================================================================
+    subgraph UC_Logout ["Use Case: Logout"]
+        direction TB
+
+        subgraph O_Operator ["Aktor: Operator Puskesmas"]
+            O_Start((Start)):::start
+            O1[Klik Tombol Logout]:::plain
+            O2[Konfirmasi Logout]:::plain
+        end
+
+        subgraph O_Sistem ["Sistem SPK"]
+            O3[Hapus Sesi Login]:::systemProcess
+            O4[Redirect ke Login Page]:::systemProcess
+        end
+
+        %% Flow Logout
+        O_Start --> O1
+        O1 --> O2
+        O2 --> O3
+        O3 --> O4
+    end

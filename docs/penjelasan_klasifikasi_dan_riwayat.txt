@@ -1,0 +1,59 @@
+PENJELASAN ILMIAH: PENENTUAN AMBANG BATAS (THRESHOLD) & ATRIBUT RIWAYAT
+Untuk Laporan Skripsi Bab 3 & Bab 4
+
+================================================================================
+A. PENJELASAN KLASIFIKASI BERDASARKAN NILAI PROBABILITAS (THRESHOLD)
+================================================================================
+Pertanyaan: Mengapa hasil perhitungan dikategorikan menjadi 3 kelas (Tidak, Cukup, Sangat) berdasarkan angka 0.02 dan 0.10?
+
+Jawabannya didasarkan pada "Analisis Distribusi Perkalian Probabilitas" dari 5 indikator utama.
+
+Rumus Dasar:
+Score = P(Usia) x P(JK) x P(Tensi) x P(Gula) x P(BMI)
+
+1. KELAS "SANGAT BERPOTENSI" (Score ≥ 0.10)
+   - Logika: Kelas ini tercapai jika MAYORITAS (4-5 indikator) memiliki nilai probabilitas risiko TINGGI.
+   - Simulasi Nilai Maksimal:
+     Jika seorang pasien memiliki kondisi terburuk di semua indikator:
+     Usia Tua (0.6) x Wanita (0.5) x Tensi Stage 2 (0.9) x Gula Diabetes (0.8) x Obesitas (0.8)
+     Hasil = 0.1728 (Contoh kasus: Pasien AINI).
+   - Analisis: Nilai 0.1728 adalah batas atas (worst case).
+   - Kesimpulan: Nilai di atas 0.10 menunjukkan bahwa pasien hampir pasti memiliki kombinasi faktor risiko berat (Tensi Tinggi + Gula Tinggi + Usia Tua).
+
+2. KELAS "CUKUP BERPOTENSI" (0.02 ≤ Score < 0.10)
+   - Logika: Kelas ini tercapai jika indikator pasien "CAMPURAN" (ada yang berisiko tinggi, ada yang rendah).
+   - Simulasi Nilai Menengah:
+     Usia Tua (0.6) x Wanita (0.5) x Tensi Normal (0.2) x Gula Normal (0.2) x Obesitas (0.8)
+     Hasil = 0.0096 (Rendah).
+     Tapi jika:
+     Usia Muda (0.2) x Wanita (0.5) x Tensi Stage 2 (0.9) x Gula Diabetes (0.8) x Normal (0.3)
+     Hasil = 0.0216 (Masuk ambang batas).
+   - Kesimpulan: Batas bawah 0.02 dipilih karena ini adalah titik di mana pasien mulai menunjukkan setidaknya 2-3 indikator risiko serius (seperti Tensi/Gula tinggi) meskipun faktor lain (Usia/BMI) masih aman.
+
+3. KELAS "TIDAK BERPOTENSI" (Score < 0.02)
+   - Logika: Kelas ini tercapai jika MAYORITAS indikator bernilai RENDAH (sehat).
+   - Simulasi Nilai Minimal:
+     Usia Muda (0.2) x Wanita (0.5) x Tensi Normal (0.2) x Gula Normal (0.2) x BMI Normal (0.3)
+     Hasil = 0.0012.
+   - Kesimpulan: Nilai di bawah 0.02 menunjukkan dominasi faktor kesehatan yang baik. Contoh kasus: DONA (0.0168) dan AGI (0.0042) memiliki tensi/gula/BMI yang relatif normal.
+
+RINGKASAN UNTUK SKRIPSI:
+"Penentuan threshold (0.02 dan 0.10) dilakukan secara empiris berdasarkan simulasi kombinasi nilai probabilitas tertinggi dan terendah dari data latih pakar. Nilai ≥ 0.10 merepresentasikan kondisi di mana 80-100% indikator berada pada level risiko tinggi, sedangkan nilai < 0.02 merepresentasikan kondisi di mana indikator risiko minim ditemukan."
+
+================================================================================
+B. PENJELASAN ATRIBUT RIWAYAT KELUARGA & RIWAYAT PENYAKIT
+================================================================================
+Pertanyaan: Mengapa ada atribut Riwayat Keluarga & Riwayat Penyakit Pribadi?
+
+1. FUNGSI SEBAGAI FAKTOR PENGUAT (CONFIRMATION FACTORS)
+   - Dalam sistem medis, Riwayat Kesehatan (Anamnesis) bukan sekadar gejala fisik saat ini, tapi prediktor jangka panjang.
+   - Riwayat Keluarga (Genetik): Hipertensi memiliki komponen heriditer. Jika orang tua memiliki hipertensi, risiko anak meningkat meskipun saat ini tensinya normal.
+   - Riwayat Penyakit (Komorbid): Diabetes Melitus dan Hipertensi sering muncul bersamaan (komplikasi). Kehadiran salah satu meningkatkan probabilitas yang lain secara drastis.
+
+2. ALASAN PEMISAHAN DALAM PERHITUNGAN MANUAL (BAB 3)
+   - Untuk menyederhanakan perhitungan manual di Bab 3 agar mudah dipahami pembaca, fokus utama diberikan pada 5 indikator fisik terukur (Usia, JK, Tensi, Gula, BMI).
+   - Namun, dalam analisis data real (seperti ditampilkan di tabel), atribut Riwayat tetap dicatat sebagai data kualitatif penting untuk validasi keputusan dokter.
+   - Dalam algoritma sistem penuh (11 indikator), atribut ini memiliki bobot probabilitas yang memperkuat hasil prediksi, terutama pada kasus "borderline" (Cukup Berpotensi).
+
+CONTOH NARASI DI WORD:
+"Atribut Riwayat Keluarga dan Riwayat Penyakit Pribadi dimasukkan sebagai variabel independen yang merepresentasikan faktor risiko genetik dan komorbiditas. Probabilitas kemunculan (Likelihood) untuk kategori 'Ada Riwayat' diberikan bobot lebih tinggi oleh pakar dibandingkan 'Tidak Ada', mencerminkan urgensi medis bahwa pasien dengan riwayat kesehatan masa lalu memiliki kecenderungan lebih besar untuk mengalami hipertensi berulang."

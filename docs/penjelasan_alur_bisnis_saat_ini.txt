@@ -1,0 +1,34 @@
+PENJELASAN ALUR PROSES BISNIS SAAT INI (AS-IS)
+UPTD PUSKESMAS PEKAN HERAN
+
+Berdasarkan diagram swimlane yang telah dibuat, berikut adalah penjelasan naratif mengenai proses pelayanan kesehatan dan pendataan pasien yang sedang berjalan saat ini:
+
+1. Aktor yang Terlibat
+   - Warga / Masyarakat: Pasien yang datang berobat atau mengikuti penyuluhan.
+   - Petugas Puskesmas: Tenaga medis/administrasi yang melayani dan mencatat data.
+   - Sistem E-Pus (Eksisting): Sistem informasi manajemen puskesmas yang saat ini digunakan.
+
+2. Alur Kegiatan
+   a. Memulai Kegiatan
+      Proses dimulai ketika warga melakukan salah satu dari dua aktivitas:
+      - Berkunjung langsung ke Gedung UPTD Puskesmas Pekan Heran untuk berobat.
+      - Menghadiri agenda penyuluhan kesehatan yang diadakan di luar lokasi puskesmas (di desa/komunitas).
+
+   b. Pemeriksaan Kesehatan
+      Petugas puskesmas melakukan pemeriksaan kesehatan (checkup) standar dan wawancara keluhan kepada warga.
+
+   c. Identifikasi Lokasi & Akses Sistem (Titik Masalah Utama)
+      Setelah pemeriksaan, petugas harus mencatat data medis pasien. Di sinilah terjadi percabangan berdasarkan lokasi:
+
+      - Skenario 1: Kegiatan Penyuluhan (Luar Lokasi)
+        Karena sistem E-Pus hanya terintegrasi dengan jaringan lokal (LAN) di gedung puskesmas, sistem TIDAK BISA diakses dari luar.
+        -> Akibat: Petugas terpaksa melakukan pendataan secara manual (tertulis di buku register/kertas).
+
+      - Skenario 2: Kegiatan di Gedung Puskesmas
+        Petugas mencoba mengakses sistem E-Pus. Namun, sering terjadi kendala teknis:
+        - Jika Jaringan Sibuk/Maintenance: Optimasi jaringan yang belum memadai menyebabkan sistem sering down/maintenance jika diakses bersamaan.
+          -> Akibat: Petugas kembali harus mencatat data secara manual.
+        - Jika Sistem Normal: Petugas baru dapat menginput data pasien ke database E-Pus.
+
+3. Hasil Akhir (Masalah)
+   Proses ini berakhir dengan kondisi "Data Terfragmentasi". Sebagian data tersimpan digital di server lokal, namun sebagian besar data (terutama dari penyuluhan dan saat sistem down) hanya tercatat di kertas/buku manual. Hal ini menyulitkan rekapitulasi dan analisis kesehatan masyarakat secara menyeluruh.

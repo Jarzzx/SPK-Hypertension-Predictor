@@ -1,0 +1,40 @@
+PANDUAN MENULIS RUMUS DI MICROSOFT WORD (Equation Editor)
+
+Cara Pakai:
+1. Buka Word.
+2. Tekan tombol "Alt" dan "=" secara bersamaan (untuk bikin kotak rumus).
+3. Copy-paste teks di bawah ini ke dalam kotak rumus tersebut.
+4. Tekan Spasi setelah paste biar formatnya rapi (untuk beberapa bagian).
+
+========================================================================
+
+1. RUMUS UMUM (Posterior Probability)
+   P(C_k | X) = P(C_k) \times \prod_(i=1)^11 P(X_i | C_k)
+
+2. PERHITUNGAN KELAS "TIDAK BERPOTENSI" (C1)
+   P(C_1 | X) = 0.33 \times 0.4 \times 0.4 \times 0.1 \times 0.2 \times 0.2 \times 0.2 \times 0.8 \times 0.8 \times 0.8 \times 0.2 \times 0.8 = 3.46 \times 10^-6
+
+3. PERHITUNGAN KELAS "CUKUP BERPOTENSI" (C2)
+   P(C_2 | X) = 0.33 \times 0.5 \times 0.5 \times 0.7 \times 0.3 \times 0.3 \times 0.3 \times 0.3 \times 0.3 \times 0.3 \times 0.7 \times 0.3 = 8.84 \times 10^-6
+
+4. PERHITUNGAN KELAS "SANGAT BERPOTENSI" (C3)
+   P(C_3 | X) = 0.33 \times 0.1 \times 0.6 \times 0.1 \times 0.9 \times 0.9 \times 0.9 \times 0.1 \times 0.1 \times 0.1 \times 0.1 \times 0.1 = 1.44 \times 10^-8
+
+5. NORMALISASI (Mencari Persentase)
+   P(C_2 | X)_(norm) = (P(C_2 | X)) / (\sum P(C_i | X))
+   = (0.0000088409) / (0.0000123156)
+   = 0.7179 \approx 71.79%
+
+========================================================================
+KETERANGAN SIMBOL (Bisa dibuat tabel di Word):
+X_1  : Usia (52 Thn)
+X_2  : Gender (Pr)
+X_3  : Tensi (Stage 1)
+X_4  : Gula Darah (Diabetes)
+X_5  : BMI (Obese)
+X_6  : Lingkar Pinggang (Very High)
+X_7  : Riwayat Keluarga (Tidak)
+X_8  : Riwayat Pribadi (Tidak)
+X_9  : Rokok (Tidak)
+X_10 : Fisik (Ringan)
+X_11 : Sayur (Cukup)

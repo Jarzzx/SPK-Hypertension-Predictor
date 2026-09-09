@@ -1,0 +1,33 @@
+PENJELASAN ALUR PROSES BISNIS USULAN (TO-BE)
+SISTEM PENDUKUNG KEPUTUSAN PREDIKSI HIPERTENSI
+
+Alur proses bisnis usulan ini dirancang untuk mengatasi kendala pada sistem lama dengan menerapkan digitalisasi penuh dan otomatisasi perhitungan menggunakan metode Naive Bayes. Berikut adalah deskripsi langkah demi langkah dari diagram Activity (Swimlane) Usulan:
+
+1. Aktor yang Terlibat
+   - Petugas/Admin: Pengguna utama yang mengoperasikan sistem.
+   - Sistem SPK Hipertensi: Aplikasi berbasis web yang melakukan pemrosesan data dan perhitungan cerdas.
+
+2. Tahapan Proses
+   a. Akses dan Keamanan
+      Petugas memulai dengan melakukan Login ke dalam sistem. Sistem akan memvalidasi kredensial (username & password). Jika valid, petugas diarahkan ke Dashboard utama; jika gagal, petugas diminta login kembali.
+
+   b. Fleksibilitas Input Data (Solusi Masalah Fragmentasi)
+      Sistem memberikan pilihan sumber data yang fleksibel untuk mengakomodasi kondisi lapangan:
+      - Input Data Manual: Digunakan untuk pelayanan harian di Puskesmas (pasien datang perorangan). Petugas menginput data klinis pasien secara langsung.
+      - Import File CSV: Fitur unggulan untuk mengatasi kendala input data massal (misalnya hasil kegiatan Penyuluhan di luar gedung). Petugas cukup mengunggah satu file CSV berisi rekap data warga, dan sistem akan memprosesnya sekaligus.
+
+   c. Otomatisasi Perhitungan (Metode Naive Bayes)
+      Setelah data masuk, Sistem SPK secara otomatis melakukan:
+      - Penyimpanan Data ke database terpusat.
+      - Perhitungan Probabilitas menggunakan algoritma Naive Bayes berdasarkan parameter risiko (Tekanan Darah, Gula Darah, BMI, dll).
+      - Penentuan Klasifikasi risiko hipertensi (misalnya: Ya/Tidak atau Tingkat Risiko).
+
+   d. Output dan Pelaporan
+      - Sistem menampilkan hasil prediksi dan grafik statistik pada dashboard.
+      - Petugas dapat melihat detail hasil prediksi per pasien.
+      - Petugas dapat mencetak Laporan Hasil Prediksi dalam format PDF secara otomatis untuk kebutuhan arsip atau laporan ke instansi terkait.
+
+3. Keunggulan Sistem Usulan
+   - Efisiensi Waktu: Menggantikan pencatatan manual dan perhitungan manual yang rawan kesalahan.
+   - Integrasi Data: Data penyuluhan dan data harian puskesmas kini terintegrasi dalam satu database.
+   - Akurasi: Penggunaan metode Naive Bayes memberikan dasar keputusan medis yang lebih objektif dan terukur.

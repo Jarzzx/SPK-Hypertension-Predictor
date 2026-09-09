@@ -1,0 +1,61 @@
+PENGUJIAN AKURASI SISTEM (SYSTEM EVALUATION)
+Studi Kasus: Perbandingan Perhitungan Manual vs Hasil Sistem SPK
+
+A. DATA PENGUJIAN
+Berikut adalah perbandingan hasil diagnosis antara Perhitungan Manual (berdasarkan 5 parameter utama) dengan Output Sistem (berdasarkan 11 parameter lengkap).
+
++----------------------+------------------+------------------------------+----------+
+| Sampel               | Manual Class     | Prediksi Sistem              | Status   |
++----------------------+------------------+------------------------------+----------+
+| Sampel 1 (Aini)      | Hipertensi       | Cukup Berpotensi (Hipertensi)| MATCH    |
+| Sampel 2 (Sumarni)   | Hipertensi       | Cukup Berpotensi (Hipertensi)| MATCH    |
+| Sampel 3 (Ruli)      | Normal           | Tidak Berpotensi (Normal)    | MATCH    |
+| Sampel 4 (Rosnaini)  | Hipertensi       | Tidak Berpotensi (Normal)    | MISMATCH |
+| Sampel 5 (Dona)      | Normal           | Tidak Berpotensi (Normal)    | MATCH    |
++----------------------+------------------+------------------------------+----------+
+
+Analisis Mismatch pada Sampel 4 (Rosnaini):
+- Manual: Hipertensi (karena Tekanan Darah 132/71 - Stage 1).
+- Sistem: Normal (Tidak Berpotensi).
+- Alasan: Sistem mempertimbangkan faktor gaya hidup (Tidak Merokok, Fisik Aktif, Makan Sayur Cukup) dan BMI Normal (21.6) yang secara agregat menurunkan risiko keseluruhan meskipun tekanan darah sedikit tinggi (Stage 1).
+
+B. CONFUSION MATRIX
+Tabel ini menggambarkan performa klasifikasi sistem terhadap "Ground Truth" (Manual).
+
+                     | Prediksi Sistem:     | Prediksi Sistem:     |
+                     | Hipertensi           | Normal               |
+---------------------|----------------------|----------------------|
+Aktual: Hipertensi   | 2 (True Positive)    | 1 (False Negative)   |
+Aktual: Normal       | 0 (False Positive)   | 2 (True Negative)    |
+
+C. PERHITUNGAN METRIK EVALUASI
+
+1. Akurasi (Accuracy)
+   Seberapa sering sistem benar secara keseluruhan?
+   Rumus: (TP + TN) / Total Data
+   Hitung: (2 + 2) / 5 = 4 / 5 = 0.8
+   Hasil: 80%
+
+2. Presisi (Precision)
+   Seberapa akurat saat sistem memprediksi Hipertensi?
+   Rumus: TP / (TP + FP)
+   Hitung: 2 / (2 + 0) = 2 / 2 = 1.0
+   Hasil: 100% (Setiap kali sistem bilang Hipertensi, itu benar)
+
+3. Recall (Sensitivitas)
+   Seberapa banyak kasus Hipertensi yang berhasil ditemukan sistem?
+   Rumus: TP / (TP + FN)
+   Hitung: 2 / (2 + 1) = 2 / 3 = 0.67
+   Hasil: 67% (Sistem melewatkan 1 kasus Hipertensi ringan/Sampel 4)
+
+4. Mean Average Precision (Macro-Average Precision)
+   Rata-rata presisi dari kedua kelas (Hipertensi dan Normal).
+   
+   - Presisi Kelas Hipertensi = 100%
+   - Presisi Kelas Normal     = TP_Normal / (TP_Normal + FP_Normal) 
+                              = 2 / (2 + 1) = 67%
+   
+   Mean Average Precision = (100% + 67%) / 2 = 83.5%
+
+KESIMPULAN:
+Sistem memiliki tingkat Akurasi 80% dan Mean Average Precision 83.5%. Perbedaan hasil pada satu sampel disebabkan oleh fitur sistem yang lebih komprehensif (11 parameter) dibandingkan perhitungan manual (5 parameter), di mana sistem mampu mendeteksi faktor protektif dari gaya hidup sehat.

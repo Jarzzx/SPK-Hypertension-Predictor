@@ -1,0 +1,46 @@
+sequenceDiagram
+    autonumber
+    actor User as Operator
+    participant Login as Login Page
+    participant Dashboard as Dashboard
+    participant Patient as Data Pasien
+    participant Checkup as Data Checkup
+    participant System as Sistem (Naive Bayes)
+    participant DB as Database
+
+    %% Login Process
+    User->>Login: Input Username & Password
+    Login->>DB: Validasi Kredensial
+    alt Login Berhasil
+        DB-->>Login: Data Valid
+        Login-->>User: Redirect ke Dashboard
+    else Login Gagal
+        DB-->>Login: Data Tidak Valid
+        Login-->>User: Tampilkan Pesan Error
+    end
+
+    %% Patient Data Process
+    User->>Dashboard: Pilih Menu Data Pasien
+    User->>Patient: Input Data Pasien Baru / Cari Pasien
+    Patient->>DB: Simpan / Ambil Data Pasien
+    DB-->>Patient: Konfirmasi Penyimpanan / Data Pasien
+
+    %% Checkup & Prediction Process
+    User->>Patient: Pilih Pasien & Input Checkup
+    Patient->>Checkup: Input Tensi, Gula Darah, BB, TB, dll
+    Checkup->>System: Hitung BMI & Atribut Turunan
+    System-->>Checkup: Hasil Perhitungan
+    Checkup->>DB: Simpan Data Checkup
+    
+    User->>Checkup: Klik "Proses Prediksi"
+    Checkup->>System: Request Prediksi Hipertensi
+    System->>DB: Ambil Data Checkup Terakhir
+    DB-->>System: Data Checkup
+    
+    activate System
+    System->>System: Hitung Probabilitas (Naive Bayes)
+    System->>System: Klasifikasi (Tidak/Cukup/Sangat Berpotensi)
+    deactivate System
+    
+    System->>DB: Simpan Hasil Prediksi
+    System-->>User: Tampilkan Hasil & Saran

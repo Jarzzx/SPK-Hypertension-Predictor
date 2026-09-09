@@ -1,0 +1,52 @@
+%% ==========================================
+%% ALUR PROSES BISNIS SISTEM (SPK HIPERTENSI)
+%% ==========================================
+flowchart TD
+    Start((Mulai)) --> Login[Petugas Melakukan Login]
+    Login --> Validasi{Validasi Login?}
+    
+    Validasi -- Gagal --> MsgError[Tampilkan Pesan Error]
+    MsgError --> Login
+    
+    Validasi -- Berhasil --> Dashboard[Masuk Dashboard Utama]
+    
+    Dashboard --> PilihanMenu{Pilih Menu}
+    
+    %% Alur Data Pasien
+    PilihanMenu -- Menu Data Pasien --> CekPasien{Data Pasien Ada?}
+    CekPasien -- Belum Ada --> InputPasien[Input Data Pasien Baru]
+    InputPasien --> SimpanPasien[Simpan ke Database]
+    SimpanPasien --> ListPasien[Tampil List Data Pasien]
+    CekPasien -- Sudah Ada --> ListPasien
+    
+    %% Alur Checkup/Diagnosa
+    ListPasien --> PilihPasien[Pilih Pasien untuk Checkup]
+    PilihMenu -- Menu Checkup --> PilihPasien
+    
+    PilihPasien --> FormDiagnosa[Tampil Form Diagnosa]
+    FormDiagnosa --> InputGejala[Input Gejala / Kriteria]
+    InputGejala --> BtnHitung[Klik Tombol Proses]
+    
+    BtnHitung --> ProsesNB[Sistem Hitung Metode Naive Bayes]
+    ProsesNB --> TampilHasil[Tampilkan Hasil Prediksi]
+    
+    TampilHasil --> SimpanHasil[Simpan Hasil Diagnosa]
+    
+    %% Alur Laporan
+    SimpanHasil --> CekLaporan{Perlu Cetak Laporan?}
+    PilihanMenu -- Menu Laporan --> CekLaporan
+    
+    CekLaporan -- Ya --> FilterLaporan[Filter Periode Laporan]
+    FilterLaporan --> GeneratePDF[Generate File PDF]
+    GeneratePDF --> Cetak[Cetak / Download Laporan]
+    Cetak --> Selesai((Selesai))
+    
+    CekLaporan -- Tidak --> Selesai
+    
+    %% Styling
+    classDef startend fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef process fill:#fff,stroke:#333,stroke-width:1px;
+    classDef decision fill:#e1f5fe,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5;
+    
+    class Start,Selesai startend;
+    class Validasi,PilihanMenu,CekPasien,CekLaporan decision;
